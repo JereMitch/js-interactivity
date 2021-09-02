@@ -5,9 +5,11 @@ let message = document.querySelector('#message')
 
 function addMovie(event) {
   event.preventDefault();
-  const inputField = document.querySelector("input");
+
+  let inputField = document.querySelector("input");
   let movie = document.createElement("li");
   let movieTitle = document.createElement("span");
+
   movieTitle.addEventListener('click', crossOffMovie)
   movieTitle.textContent = inputField.value;
   movie.appendChild(movieTitle).querySelector;
@@ -16,23 +18,37 @@ function addMovie(event) {
   let deleteBtn = document.createElement("button");
   deleteBtn.addEventListener('click', deleteMovie)
   deleteBtn.textContent = "x";
+
   movie.appendChild(deleteBtn);
 
   inputField.value = "";
 }
 
+document.querySelector("form").addEventListener("submit", addMovie);
+
 function deleteMovie(event) {
   event.target.parentNode.remove();
-  message.textContent = "Movie Deleted!"
+  message.textContent =  `${event.target.parentNode.firstChild.textContent} Deleted!`
+  revealMessage()
 }
 
 function crossOffMovie(event) {
   event.target.classList.toggle("checked")
   if(event.target.classList.contains("checked")){
-        message.textContent = "Movie Watched"
+        message.textContent = `${event.target.textContent} Watched`
   } else {
-      message.textContent = "Movie Added Back"
+      message.textContent = `${event.target.textContent} Added Back`
   }
+  revealMessage()
 }
 
-document.querySelector("form").addEventListener("submit", addMovie);
+function revealMessage(){
+  message.classList.remove('hide')
+  setTimeout(function (){
+    message.classList.add('hide')
+  },1000)
+}
+
+
+// let name = "Jeremy"
+// console.log(`${name}`)
